@@ -2,10 +2,10 @@
 
 ## Getting Started
 
-To get started with this application, make sure you have Node.js v18+ installed on your system. Then, follow these steps:
+To get started with this application, make sure you have Node.js v22+ installed on your system. Then, follow these steps:
 
 ```bash
-git clone https://github.com/AREA44/area44.github.io --depth=1
+git clone https://github.com/AREA44/area44.github.io
 cd area44.github.io
 pnpm install
 pnpm dev
