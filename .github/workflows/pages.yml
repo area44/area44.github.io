@@ -13,9 +13,10 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    uses: area44/workflows/vite@v2.0.0
-    with:
-      run_deploy: true
+    steps:
+      - uses: area44/workflows/vite@v2.0.0
+        with:
+          run_deploy: true
 
   deploy:
     name: Deploy to GitHub Pages
