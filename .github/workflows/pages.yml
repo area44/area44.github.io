@@ -4,6 +4,12 @@ on:
   push:
     branches: ['main']
   pull_request:
+  workflow_dispatch:
+    inputs:
+      run_deploy:
+        description: Whether to run the deploy step
+        required: false
+        default: 'false'
 
 permissions:
   contents: read
@@ -13,14 +19,17 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.build.outputs.should_deploy }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-    
+
       - name: Run build
+        id: build
         uses: area44/workflows/vite@v2.0.0
         with:
-          run_deploy: true
+          run_deploy: ${{ github.event.inputs.run_deploy || 'false' }}
 
   deploy:
     name: Deploy to GitHub Pages
