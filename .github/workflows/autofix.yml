@@ -11,4 +11,5 @@ permissions:
 jobs:
   autofix:
     runs-on: ubuntu-latest
-    uses: area44/workflows/autifix@v2.0.0
+    steps:
+      - uses: area44/workflows/autifix@v2.0.0
