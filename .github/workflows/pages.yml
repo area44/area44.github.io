@@ -14,7 +14,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: area44/workflows/vite@v2.0.0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+    
+      - name: Run build
+        uses: area44/workflows/vite@v2.0.0
         with:
           run_deploy: true
 

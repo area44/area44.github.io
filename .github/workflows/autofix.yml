@@ -12,4 +12,8 @@ jobs:
   autofix:
     runs-on: ubuntu-latest
     steps:
-      - uses: area44/workflows/autofix@v2.0.0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Run autofix
+        uses: area44/workflows/autofix@v2.0.0
