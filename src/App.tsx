@@ -73,7 +73,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer id="contact" className="bg-muted/40 py-10 mt-auto" role="contentinfo">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground border-t pt-6">
+        <div className="mx-auto px-4 text-center text-sm text-muted-foreground border-t pt-6">
           <p>&copy; {year} AREA44. All rights reserved.</p>
         </div>
       </footer>
