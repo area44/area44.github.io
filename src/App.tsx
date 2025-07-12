@@ -45,7 +45,7 @@ export default function LandingPage() {
                   <a
                     href="#contact"
                     aria-label="Contact AREA44"
-                    className="inline-block rounded-md bg-primary px-6 py-3 text-white font-medium shadow hover:bg-primary/90 transition"
+                    className="inline-block rounded-md bg-primary px-6 py-3 text-black font-medium shadow hover:bg-primary/90 transition"
                   >
                     Contact Us
                   </a>
