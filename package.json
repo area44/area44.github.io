@@ -1,31 +1,31 @@
 {
-  "name": "area44.github.io",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "format": "biome format --write .",
-    "lint": "biome lint --write .",
-    "check": "biome check --write ."
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.11",
-    "@unhead/react": "^2.0.12",
-    "@vitejs/plugin-react": "^4.6.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.11",
-    "vite": "^7.0.4"
-  },
-  "devDependencies": {
-    "@area44/biome-config": "^2.2.2",
-    "@biomejs/biome": "^2.1.1",
-    "@types/node": "^24.0.13",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "typescript": "^5.8.3"
-  }
+	"name": "area44.github.io",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"preview": "vite preview",
+		"format": "biome format --write .",
+		"lint": "biome lint --write .",
+		"check": "biome check --write ."
+	},
+	"dependencies": {
+		"@tailwindcss/vite": "^4.1.11",
+		"@unhead/react": "^2.0.12",
+		"@vitejs/plugin-react": "^4.6.0",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0",
+		"tailwindcss": "^4.1.11",
+		"vite": "^7.0.4"
+	},
+	"devDependencies": {
+		"@area44/biome-config": "^2.2.2",
+		"@biomejs/biome": "^2.1.1",
+		"@types/node": "^24.0.13",
+		"@types/react": "^19.1.8",
+		"@types/react-dom": "^19.1.6",
+		"typescript": "^5.8.3"
+	}
 }
