@@ -31,8 +31,8 @@ importers:
         version: 7.0.4(@types/node@24.0.13)(jiti@2.4.2)(lightningcss@1.30.1)
     devDependencies:
       '@area44/biome-config':
-        specifier: ^2.2.3
-        version: 2.2.3
+        specifier: ^2.2.4
+        version: 2.2.4
       '@biomejs/biome':
         specifier: ^2.1.1
         version: 2.1.1
@@ -55,9 +55,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@area44/biome-config@2.2.3':
-    resolution: {integrity: sha512-MjUOJKQdJoA/GD/zIdV1pLPwcGERDXoj/Uzx9E2m8UVmqu+rSyJE6PU5u9jfY7D6v9esB1B06AS5X7Fr8hYCwA==}
-    engines: {node: '>=22.17.0'}
+  '@area44/biome-config@2.2.4':
+    resolution: {integrity: sha512-lhFPNiQ5P9qBnflJ9uFXp0UID0Q2zMupmXtd5FsatwyMNPpY1IzgWp1FOLn3auZ7A7HwSl7RapDFzwuN8/0YWQ==}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -905,7 +904,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.12
       '@jridgewell/trace-mapping': 0.3.29
 
-  '@area44/biome-config@2.2.3': {}
+  '@area44/biome-config@2.2.4': {}
 
   '@babel/code-frame@7.27.1':
     dependencies:
