@@ -1,7 +1,14 @@
 import { useRef, useEffect, useState } from "react"
+import { useHead } from '@unhead/react'
 
+export default function App() {
+  useHead({
+    title: 'AREA44 | Website',
+    meta: [
+      { name: 'description', content: 'Welcome to AREA44' }
+    ]
+  });
 
-export default function AREA44() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mousePositionRef = useRef({ x: 0, y: 0 })
   const isTouchingRef = useRef(false)
