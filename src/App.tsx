@@ -74,6 +74,7 @@ export default function AREA44() {
     }
 
     function getLetterIndex(x: number, y: number): number {
+      if (!ctx || !canvas) return 0
       // Determine which letter the particle belongs to based on position
       const centerX = canvas.width / 2
       const fontSize = isMobile ? 48 : 96
@@ -97,7 +98,7 @@ export default function AREA44() {
       return colors[letterIndex] || "#FF6B35"
     }
 
-    function createParticle(_scale: number) {
+    function createParticle(scale: number) {
       if (!ctx || !canvas || !textImageData) return null
 
       const data = textImageData.data
@@ -128,6 +129,7 @@ export default function AREA44() {
     }
 
     function createInitialParticles(scale: number) {
+      if (!ctx || !canvas) return 0
       const baseParticleCount = 7000 // Increased base count for higher density
       const particleCount = Math.floor(baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)))
       for (let i = 0; i < particleCount; i++) {
@@ -267,7 +269,7 @@ export default function AREA44() {
       />
       <div className="absolute bottom-[100px] text-center z-10">
         <p className="font-mono text-gray-400 text-xs sm:text-base md:text-sm ">
-          &copy; 2025{" "}
+          Welcome to{" "}
           <a
             href="https://github.com/area44"
             target="_blank"
@@ -276,7 +278,13 @@ export default function AREA44() {
           >
             AREA44
           </a>{" "}
-          <span>- All rights reserved.</span>
+          <span>-</span>{" "}
+          <span className="transition-colors duration-300">Crafted with code & curiosity.</span>
+          <style>{`
+            a.invite-link:hover + span + span {
+              color: #FF9900;
+            }
+          `}</style>
         </p>
       </div>
     </div>
