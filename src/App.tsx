@@ -1,82 +1,285 @@
-import logoUrl from '@/assets/logo.svg';
+import { useRef, useEffect, useState } from "react"
 
-export default function LandingPage() {
-  const year = new Date().getFullYear();
+
+export default function AREA44() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const mousePositionRef = useRef({ x: 0, y: 0 })
+  const isTouchingRef = useRef(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    const updateCanvasSize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      setIsMobile(window.innerWidth < 768) // Set mobile breakpoint
+    }
+
+    updateCanvasSize()
+
+    let particles: {
+      x: number
+      y: number
+      baseX: number
+      baseY: number
+      size: number
+      color: string
+      scatteredColor: string
+      life: number
+      letterIndex: number
+    }[] = []
+
+    let textImageData: ImageData | null = null
+
+    function createTextImage() {
+      if (!ctx || !canvas) return 0
+
+      // Ensure canvas has valid dimensions before proceeding
+      if (canvas.width <= 0 || canvas.height <= 0) {
+        return 0
+      }
+
+      ctx.fillStyle = "white"
+      ctx.save()
+
+      const fontSize = isMobile ? 48 : 96
+      ctx.font = `bold ${fontSize}px 'Courier New', monospace`
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+
+      const text = "AREA44"
+
+      ctx.translate(canvas.width / 2, canvas.height / 2)
+      ctx.fillText(text, 0, 0)
+
+      ctx.restore()
+
+      // Additional validation before getImageData
+      try {
+        textImageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      } catch (error) {
+        console.warn("Failed to get image data:", error)
+        textImageData = null
+        return 0
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      return fontSize / 96 // Return scale factor
+    }
+
+    function getLetterIndex(x: number, y: number): number {
+      // Determine which letter the particle belongs to based on position
+      const centerX = canvas.width / 2
+      const fontSize = isMobile ? 48 : 96
+      const letterWidth = fontSize * 0.6 // Approximate letter width for monospace
+
+      const relativeX = x - centerX
+      const letterPosition = Math.floor((relativeX + letterWidth * 3) / letterWidth)
+
+      return Math.max(0, Math.min(5, letterPosition)) // Clamp to 0-5 for "AREA44"
+    }
+
+    function getColorForLetter(letterIndex: number): string {
+      const colors = [
+        "#FF6B35", // A - Orange/Red
+        "#F7931E", // R - Orange
+        "#FFD23F", // E - Yellow
+        "#06D6A0", // A - Teal/Green
+        "#118AB2", // 4 - Blue
+        "#073B4C", // 4 - Dark Blue
+      ]
+      return colors[letterIndex] || "#FF6B35"
+    }
+
+    function createParticle(_scale: number) {
+      if (!ctx || !canvas || !textImageData) return null
+
+      const data = textImageData.data
+
+      for (let attempt = 0; attempt < 100; attempt++) {
+        const x = Math.floor(Math.random() * canvas.width)
+        const y = Math.floor(Math.random() * canvas.height)
+
+        if (data[(y * canvas.width + x) * 4 + 3] > 128) {
+          const letterIndex = getLetterIndex(x, y)
+          const scatteredColor = getColorForLetter(letterIndex)
+
+          return {
+            x: x,
+            y: y,
+            baseX: x,
+            baseY: y,
+            size: Math.random() * 1 + 0.5,
+            color: "white",
+            scatteredColor: scatteredColor,
+            letterIndex: letterIndex,
+            life: Math.random() * 100 + 50,
+          }
+        }
+      }
+
+      return null
+    }
+
+    function createInitialParticles(scale: number) {
+      const baseParticleCount = 7000 // Increased base count for higher density
+      const particleCount = Math.floor(baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)))
+      for (let i = 0; i < particleCount; i++) {
+        const particle = createParticle(scale)
+        if (particle) particles.push(particle)
+      }
+    }
+
+    let animationFrameId: number
+
+    function animate(scale: number) {
+      if (!ctx || !canvas) return
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      const { x: mouseX, y: mouseY } = mousePositionRef.current
+      const maxDistance = 240
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]
+        const dx = mouseX - p.x
+        const dy = mouseY - p.y
+        const distance = Math.sqrt(dx * dx + dy * dy)
+
+        if (distance < maxDistance && (isTouchingRef.current || !("ontouchstart" in window))) {
+          const force = (maxDistance - distance) / maxDistance
+          const angle = Math.atan2(dy, dx)
+          const moveX = Math.cos(angle) * force * 60
+          const moveY = Math.sin(angle) * force * 60
+          p.x = p.baseX - moveX
+          p.y = p.baseY - moveY
+
+          ctx.fillStyle = p.scatteredColor
+        } else {
+          p.x += (p.baseX - p.x) * 0.1
+          p.y += (p.baseY - p.y) * 0.1
+          ctx.fillStyle = "white"
+        }
+
+        ctx.fillRect(p.x, p.y, p.size, p.size)
+
+        p.life--
+        if (p.life <= 0) {
+          const newParticle = createParticle(scale)
+          if (newParticle) {
+            particles[i] = newParticle
+          } else {
+            particles.splice(i, 1)
+            i--
+          }
+        }
+      }
+
+      const baseParticleCount = 7000
+      const targetParticleCount = Math.floor(
+        baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)),
+      )
+      while (particles.length < targetParticleCount) {
+        const newParticle = createParticle(scale)
+        if (newParticle) particles.push(newParticle)
+      }
+
+      animationFrameId = requestAnimationFrame(() => animate(scale))
+    }
+
+    const scale = createTextImage()
+    createInitialParticles(scale)
+    animate(scale)
+
+    const handleResize = () => {
+      updateCanvasSize()
+      // Add a small delay to ensure canvas dimensions are properly set
+      setTimeout(() => {
+        const newScale = createTextImage()
+        if (newScale > 0) {
+          particles = []
+          createInitialParticles(newScale)
+        }
+      }, 10)
+    }
+
+    const handleMove = (x: number, y: number) => {
+      mousePositionRef.current = { x, y }
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      handleMove(e.clientX, e.clientY)
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        e.preventDefault()
+        handleMove(e.touches[0].clientX, e.touches[0].clientY)
+      }
+    }
+
+    const handleTouchStart = () => {
+      isTouchingRef.current = true
+    }
+
+    const handleTouchEnd = () => {
+      isTouchingRef.current = false
+      mousePositionRef.current = { x: 0, y: 0 }
+    }
+
+    const handleMouseLeave = () => {
+      if (!("ontouchstart" in window)) {
+        mousePositionRef.current = { x: 0, y: 0 }
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+    canvas.addEventListener("mousemove", handleMouseMove)
+    canvas.addEventListener("touchmove", handleTouchMove, { passive: false })
+    canvas.addEventListener("mouseleave", handleMouseLeave)
+    canvas.addEventListener("touchstart", handleTouchStart)
+    canvas.addEventListener("touchend", handleTouchEnd)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      canvas.removeEventListener("mousemove", handleMouseMove)
+      canvas.removeEventListener("touchmove", handleTouchMove)
+      canvas.removeEventListener("mouseleave", handleMouseLeave)
+      canvas.removeEventListener("touchstart", handleTouchStart)
+      canvas.removeEventListener("touchend", handleTouchEnd)
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [isMobile])
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      {/* Header */}
-      <header
-        className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-white/60"
-        role="banner"
-      >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <div className="flex items-center">
-            <div className="flex size-12 items-center justify-center rounded-lg bg-primary">
-              <img
-                src={logoUrl}
-                alt="AREA44 logo"
-                className="max-h-8 w-auto object-contain"
-              />
-            </div>
-            <span className="text-lg font-semibold tracking-tight">AREA44</span>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1" role="main">
-        <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-              {/* Left Column: Text */}
-              <div className="space-y-6">
-                <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-                  Welcome to AREA44
-                </h1>
-                <p className="text-lg text-muted-foreground max-w-xl">
-                  <strong>AREA44</strong> is the creative playground of 
-                  <a href="https://x.com/torn4dom4n" target="_blank" rel="noopener noreferrer" className="text-primary underline ml-1">
-                    @torn4dom4n
-                  </a> - 
-                  a space where ideas come alive through code, design, and boundless imagination.
-                </p>
-                <div>
-                  <a
-                    href="#contact"
-                    aria-label="Contact AREA44"
-                    className="inline-block rounded-md bg-primary px-6 py-3 text-black font-medium shadow hover:bg-primary/90 transition"
-                  >
-                    Contact Us
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Column: Illustration or Visual */}
-              <div className="relative">
-                <div
-                  className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/20 to-secondary/20 blur-3xl pointer-events-none"
-                  aria-hidden="true"
-                />
-                <div className="relative aspect-square w-full max-w-md mx-auto rounded-xl bg-muted/30 shadow-inner border border-muted/40">
-                  {/* Replace below div with an image or SVG if desired */}
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    {/* Optional placeholder content */}
-                    <span className="text-xl font-medium">Creative Space</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer id="contact" className="bg-muted/40 py-10 mt-auto" role="contentinfo">
-        <div className="mx-auto px-4 text-center text-sm text-muted-foreground border-t pt-6">
-          <p>&copy; {year} AREA44. All rights reserved.</p>
-        </div>
-      </footer>
+    <div className="relative w-full h-dvh flex flex-col items-center justify-center bg-black">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full absolute top-0 left-0 touch-none"
+        aria-label="Interactive particle effect with AREA44 logo"
+      />
+      <div className="absolute bottom-[100px] text-center z-10">
+        <p className="font-mono text-gray-400 text-xs sm:text-base md:text-sm ">
+          &copy; 2025{" "}
+          <a
+            href="https://github.com/area44"
+            target="_blank"
+            className="invite-link text-gray-300 hover:text-cyan-400 transition-colors duration-300"
+            rel="noreferrer"
+          >
+            AREA44
+          </a>{" "}
+          <span>- All rights reserved.</span>
+        </p>
+      </div>
     </div>
-  );
+  )
 }
+
