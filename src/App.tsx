@@ -1,50 +1,36 @@
-import { useRef, useEffect, useState } from "react"
-import { useHead } from '@unhead/react'
+import { useRef, useEffect, useState } from "react";
+import { useHead } from '@unhead/react';
 
 export default function App() {
   useHead({
     title: 'AREA44 | Website',
-    meta: [
-      { name: 'description', content: 'Welcome to AREA44' }
-    ]
+    meta: [{ name: 'description', content: 'Welcome to AREA44' }]
   });
 
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mousePositionRef = useRef({ x: 0, y: 0 })
-  const isTouchingRef = useRef(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mousePositionRef = useRef({ x: 0, y: 0 });
+  const isTouchingRef = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
     const updateCanvasSize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      setIsMobile(window.innerWidth < 768)
-    }
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      setIsMobile(window.innerWidth < 768);
+    };
 
-    updateCanvasSize()
+    updateCanvasSize();
 
-    let particles: {
-      x: number
-      y: number
-      baseX: number
-      baseY: number
-      size: number
-      color: string
-      scatteredColor: string
-      life: number
-      letterIndex: number
-    }[] = []
-
-    let textImageData: ImageData | null = null
+    let particles: any[] = [];
+    let textImageData: ImageData | null = null;
 
     function createTextImage(): number {
-      if (!ctx || !canvas) return 0
+      if (!ctx || !canvas) return 0;
 
       const svgString = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
@@ -58,7 +44,7 @@ export default function App() {
       const img = new Image();
 
       img.onload = () => {
-        const scale = isMobile ? 0.4 : 0.8;
+        const scale = isMobile ? 1.0 : 2.0;
         const imgWidth = img.width * scale;
         const imgHeight = img.height * scale;
 
@@ -80,7 +66,7 @@ export default function App() {
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        startParticles(imgWidth / 500); // scale factor
+        startParticles(imgWidth / 500); // maintain scale ratio for particles
         URL.revokeObjectURL(url);
       };
 
@@ -103,7 +89,6 @@ export default function App() {
         const y = Math.floor(Math.random() * canvas.height);
 
         if (data[(y * canvas.width + x) * 4 + 3] > 128) {
-          const scatteredColor = "white"; // Or extract color from data[]
           return {
             x,
             y,
@@ -111,7 +96,7 @@ export default function App() {
             baseY: y,
             size: Math.random() * 1 + 0.5,
             color: "white",
-            scatteredColor,
+            scatteredColor: "white",
             letterIndex: 0,
             life: Math.random() * 100 + 50,
           };
@@ -122,6 +107,7 @@ export default function App() {
 
     function createInitialParticles(scale: number) {
       if (!ctx || !canvas) return;
+
       const baseParticleCount = 7000;
       const particleCount = Math.floor(baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)));
       for (let i = 0; i < particleCount; i++) {
@@ -134,6 +120,7 @@ export default function App() {
 
     function animate(scale: number) {
       if (!ctx || !canvas) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "black";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -189,49 +176,49 @@ export default function App() {
     const handleResize = () => {
       updateCanvasSize();
       setTimeout(() => createTextImage(), 10);
-    }
+    };
 
     const handleMove = (x: number, y: number) => {
-      mousePositionRef.current = { x, y }
-    }
+      mousePositionRef.current = { x, y };
+    };
 
-    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY)
+    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
-        e.preventDefault()
-        handleMove(e.touches[0].clientX, e.touches[0].clientY)
+        e.preventDefault();
+        handleMove(e.touches[0].clientX, e.touches[0].clientY);
       }
-    }
+    };
 
-    const handleTouchStart = () => isTouchingRef.current = true
+    const handleTouchStart = () => (isTouchingRef.current = true);
     const handleTouchEnd = () => {
-      isTouchingRef.current = false
-      mousePositionRef.current = { x: 0, y: 0 }
-    }
+      isTouchingRef.current = false;
+      mousePositionRef.current = { x: 0, y: 0 };
+    };
 
     const handleMouseLeave = () => {
       if (!("ontouchstart" in window)) {
-        mousePositionRef.current = { x: 0, y: 0 }
+        mousePositionRef.current = { x: 0, y: 0 };
       }
-    }
+    };
 
-    window.addEventListener("resize", handleResize)
-    canvas.addEventListener("mousemove", handleMouseMove)
-    canvas.addEventListener("touchmove", handleTouchMove, { passive: false })
-    canvas.addEventListener("mouseleave", handleMouseLeave)
-    canvas.addEventListener("touchstart", handleTouchStart)
-    canvas.addEventListener("touchend", handleTouchEnd)
+    window.addEventListener("resize", handleResize);
+    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+    canvas.addEventListener("mouseleave", handleMouseLeave);
+    canvas.addEventListener("touchstart", handleTouchStart);
+    canvas.addEventListener("touchend", handleTouchEnd);
 
     return () => {
-      window.removeEventListener("resize", handleResize)
-      canvas.removeEventListener("mousemove", handleMouseMove)
-      canvas.removeEventListener("touchmove", handleTouchMove)
-      canvas.removeEventListener("mouseleave", handleMouseLeave)
-      canvas.removeEventListener("touchstart", handleTouchStart)
-      canvas.removeEventListener("touchend", handleTouchEnd)
-      cancelAnimationFrame(animationFrameId)
-    }
-  }, [isMobile])
+      window.removeEventListener("resize", handleResize);
+      canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas.removeEventListener("touchmove", handleTouchMove);
+      canvas.removeEventListener("mouseleave", handleMouseLeave);
+      canvas.removeEventListener("touchstart", handleTouchStart);
+      canvas.removeEventListener("touchend", handleTouchEnd);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isMobile]);
 
   return (
     <div className="relative w-full h-dvh flex flex-col items-center justify-center bg-black">
@@ -261,5 +248,5 @@ export default function App() {
         </p>
       </div>
     </div>
-  )
+  );
 }
