@@ -1,11 +1,39 @@
 import { useRef, useEffect, useState } from "react";
-import { useHead } from '@unhead/react';
+import { useHead, useSeoMeta } from '@unhead/react';
 
 export default function App() {
   useHead({
+    htmlAttrs: { lang: 'en-US' },
     title: 'AREA44 | Website',
-    meta: [{ name: 'description', content: 'Welcome to AREA44' }]
-  });
+    meta: [{ name: 'description', content: 'Welcome to AREA44' }],
+    link: [{
+      rel: 'canonical',
+      href: 'https://area44.github.io'
+    }]
+  })
+
+  useSeoMeta({
+    ogTitle: 'AREA44 | Website',
+    ogDescription: 'Welcome to AREA44.',
+    twitterTitle: 'AREA44 | Website',
+    twitterDescription: 'Welcome to AREA44.',
+    twitterCreator: '@torn4dom4n',
+    ogImage: {
+      url: './og-image.png',
+      width: 1200,
+      height: 600,
+      alt: 'AREA44 Logo',
+      type: 'image/png'
+    },
+    twitterImage: {
+      url: './og-image.png',
+      width: 1200,
+      height: 600,
+      alt: 'AREA44',
+      type: 'image/png'
+    },
+    twitterCard: 'summary_large_image',
+  })
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePositionRef = useRef({ x: 0, y: 0 });
@@ -233,7 +261,7 @@ export default function App() {
           <a
             href="https://github.com/area44"
             target="_blank"
-            className="invite-link text-gray-300 hover:text-cyan-400 transition-colors duration-300"
+            className="invite-link text-gray-300 hover:text-white transition-colors duration-300"
             rel="noreferrer"
           >
             AREA44
