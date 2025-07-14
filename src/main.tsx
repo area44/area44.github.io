@@ -7,9 +7,9 @@ import App from "@/App.tsx";
 const head = createHead();
 
 createRoot(document.getElementById("root")!).render(
-	<StrictMode>
-		<UnheadProvider head={head}>
-			<App />
-		</UnheadProvider>
-	</StrictMode>,
+  <StrictMode>
+    <UnheadProvider head={head}>
+      <App />
+    </UnheadProvider>
+  </StrictMode>
 );
