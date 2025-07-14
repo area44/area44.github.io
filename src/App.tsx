@@ -86,7 +86,7 @@ export default function App() {
       const img = new Image();
 
       img.onload = () => {
-        const scale = isMobile ? 1.0 : 2.0;
+        const scale = isMobile ? 2.0 : 3.0;
         const imgWidth = img.width * scale;
         const imgHeight = img.height * scale;
 
