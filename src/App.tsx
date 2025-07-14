@@ -73,7 +73,7 @@ export default function AREA44() {
       return fontSize / 96 // Return scale factor
     }
 
-    function getLetterIndex(x: number, y: number): number {
+    function getLetterIndex(x: number, _y: number): number {
       if (!ctx || !canvas) return 0
       // Determine which letter the particle belongs to based on position
       const centerX = canvas.width / 2
@@ -98,7 +98,7 @@ export default function AREA44() {
       return colors[letterIndex] || "#FF6B35"
     }
 
-    function createParticle(scale: number) {
+    function createParticle(_scale: number) {
       if (!ctx || !canvas || !textImageData) return null
 
       const data = textImageData.data
