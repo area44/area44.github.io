@@ -11,7 +11,7 @@ export default function LandingPage() {
         role="banner"
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             <div className="flex size-12 items-center justify-center rounded-lg bg-primary">
               <img
                 src={logoUrl}
