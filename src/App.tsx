@@ -1,42 +1,6 @@
-import { useHead, useSeoMeta } from "@unhead/react";
 import { useEffect, useRef, useState } from "react";
 
 export default function App() {
-  useHead({
-    htmlAttrs: { lang: "en-US" },
-    title: "AREA44 | Website",
-    meta: [{ name: "description", content: "Welcome to AREA44" }],
-    link: [
-      {
-        rel: "canonical",
-        href: "https://area44.github.io",
-      },
-    ],
-  });
-
-  useSeoMeta({
-    ogTitle: "AREA44 | Website",
-    ogDescription: "Welcome to AREA44.",
-    twitterTitle: "AREA44 | Website",
-    twitterDescription: "Welcome to AREA44.",
-    twitterCreator: "@torn4dom4n",
-    ogImage: {
-      url: "./og-image.png",
-      width: 1200,
-      height: 600,
-      alt: "AREA44 Logo",
-      type: "image/png",
-    },
-    twitterImage: {
-      url: "./og-image.png",
-      width: 1200,
-      height: 600,
-      alt: "AREA44",
-      type: "image/png",
-    },
-    twitterCard: "summary_large_image",
-  });
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePositionRef = useRef({ x: 0, y: 0 });
   const isTouchingRef = useRef(false);
