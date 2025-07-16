@@ -1,4 +1,4 @@
-# AREA44 | Website
+# AREA44's Website
 
 ## Getting Started
 
@@ -11,7 +11,7 @@ pnpm install
 pnpm dev
 ```
 
-Now, you can open your browser and navigate to http://localhost:4321 to see the application running.
+Now, you can open your browser and navigate to http://localhost:5173 to see the application running.
 
 ## License
 
