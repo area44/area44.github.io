@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
-    "@vitejs/plugin-react": "^5.1.4",
+    "@vitejs/plugin-react": "^6.0.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwindcss": "^4.2.1",
-    "vite": "npm:rolldown-vite@latest"
+    "vite": "^8.0.0"
   },
   "devDependencies": {
     "@area44/biome-config": "^2.3.3",
