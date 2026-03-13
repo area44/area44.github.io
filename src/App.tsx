@@ -260,7 +260,7 @@ export default function App() {
           </span>
           <style>{`
             a.invite-link:hover + span + span {
-              color: #FF9900;
+              color: #FFFFFF;
             }
           `}</style>
         </p>
