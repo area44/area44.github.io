@@ -7,6 +7,9 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -139,6 +142,13 @@ export default function App() {
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
+        if (prefersReducedMotion) {
+          p.x = p.baseX;
+          p.y = p.baseY;
+          ctx.fillStyle = "white";
+          ctx.fillRect(p.x, p.y, p.size, p.size);
+          continue;
+        }
         const dx = mouseX - p.x;
         const dy = mouseY - p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -247,19 +257,20 @@ export default function App() {
         <p className="font-mono text-gray-400 text-xs sm:text-base md:text-sm ">
           Welcome to{" "}
           <a
-            className="invite-link text-gray-300 hover:text-white transition-colors duration-300"
+            className="invite-link focus-visible:ring-1 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none rounded-sm text-gray-300 hover:text-white transition-colors duration-300"
             href="https://github.com/area44"
             rel="noreferrer"
             target="_blank"
           >
             AREA44
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>{" "}
           <span>-</span>{" "}
           <span className="transition-colors duration-300">
             Crafted with code & curiosity.
           </span>
           <style>{`
-            a.invite-link:hover + span + span {
+            a.invite-link:hover + span + span, a.invite-link:focus-visible + span + span {
               color: #FFFFFF;
             }
           `}</style>
