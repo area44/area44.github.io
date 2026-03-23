@@ -7,9 +7,7 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -63,7 +61,7 @@ export default function App() {
           canvas.width / 2 - imgWidth / 2,
           canvas.height / 2 - imgHeight / 2,
           imgWidth,
-          imgHeight
+          imgHeight,
         );
 
         try {
@@ -119,8 +117,7 @@ export default function App() {
 
       const baseParticleCount = 7000;
       const particleCount = Math.floor(
-        baseParticleCount *
-          Math.sqrt((canvas.width * canvas.height) / (1920 * 1080))
+        baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)),
       );
       for (let i = 0; i < particleCount; i++) {
         const p = createParticle(scale);
@@ -153,10 +150,7 @@ export default function App() {
         const dy = mouseY - p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (
-          distance < maxDistance &&
-          (isTouchingRef.current || !("ontouchstart" in window))
-        ) {
+        if (distance < maxDistance && (isTouchingRef.current || !("ontouchstart" in window))) {
           const force = (maxDistance - distance) / maxDistance;
           const angle = Math.atan2(dy, dx);
           const moveX = Math.cos(angle) * force * 60;
@@ -185,7 +179,7 @@ export default function App() {
 
       const baseCount = 7000;
       const targetCount = Math.floor(
-        baseCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080))
+        baseCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)),
       );
       while (particles.length < targetCount) {
         const newP = createParticle(scale);
@@ -266,9 +260,7 @@ export default function App() {
             <span className="sr-only"> (opens in a new tab)</span>
           </a>{" "}
           <span>-</span>{" "}
-          <span className="transition-colors duration-300">
-            Crafted with code & curiosity.
-          </span>
+          <span className="transition-colors duration-300">Crafted with code & curiosity.</span>
           <style>{`
             a.invite-link:hover + span + span, a.invite-link:focus-visible + span + span {
               color: #FFFFFF;
