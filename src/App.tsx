@@ -103,7 +103,9 @@ export default function App() {
             baseY: y,
             size: Math.random() * 1 + 0.5,
             color: "white",
-            scatteredColor: "white",
+            scatteredColor: ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"][
+              Math.floor(Math.random() * 6)
+            ],
             letterIndex: 0,
             life: Math.random() * 100 + 50,
           };
