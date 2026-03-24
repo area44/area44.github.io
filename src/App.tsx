@@ -1,5 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 
+interface Particle {
+  x: number;
+  y: number;
+  baseX: number;
+  baseY: number;
+  size: number;
+  color: string;
+  scatteredColor: string;
+  letterIndex: number;
+  life: number;
+}
+
 export default function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePositionRef = useRef({ x: 0, y: 0 });
@@ -20,18 +32,6 @@ export default function App() {
     };
 
     updateCanvasSize();
-
-    type Particle = {
-      x: number;
-      y: number;
-      baseX: number;
-      baseY: number;
-      size: number;
-      color: string;
-      scatteredColor: string;
-      letterIndex: number;
-      life: number;
-    };
 
     let particles: Particle[] = [];
     let textImageData: ImageData | null = null;
@@ -87,7 +87,7 @@ export default function App() {
       animate(scale);
     }
 
-    function createParticle(_scale: number) {
+    function createParticle(_scale: number): Particle | null {
       if (!ctx || !canvas || !textImageData) return null;
 
       const data = textImageData.data;
