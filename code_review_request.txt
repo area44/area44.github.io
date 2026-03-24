@@ -1,6 +1,7 @@
-I have fixed the issue where the logo doesn't change color when hovered by the mouse.
-I have:
-1. Defined a color palette of vibrant colors in src/App.tsx.
-2. Updated the createParticle function to assign a random color from this palette to the scatteredColor property of each particle.
-3. Verified that the particles change to these colors when the mouse is near them (which is the "hover" effect for this canvas-based logo).
-4. Ran vp check --fix and ensured the build passes.
+I have fixed the issue where the logo particles did not animate (scatter) on hover.
+
+Changes:
+1. Reverted the previous commit that changed particle colors, as requested.
+2. Fixed the hover animation logic in src/App.tsx by removing a restrictive check (isTouchingRef.current || !("ontouchstart" in window)) that was preventing mouse interaction on many systems.
+3. Updated handleMouseLeave to correctly reset the mouse position to { x: 0, y: 0 } on all platforms, ensuring particles return to their base positions when the mouse leaves the canvas.
+4. Verified that the hover animation (scattering) works correctly while keeping the particles white.

@@ -103,9 +103,7 @@ export default function App() {
             baseY: y,
             size: Math.random() * 1 + 0.5,
             color: "white",
-            scatteredColor: ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"][
-              Math.floor(Math.random() * 6)
-            ],
+            scatteredColor: "white",
             letterIndex: 0,
             life: Math.random() * 100 + 50,
           };
@@ -152,7 +150,7 @@ export default function App() {
         const dy = mouseY - p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < maxDistance && (isTouchingRef.current || !("ontouchstart" in window))) {
+        if (distance < maxDistance) {
           const force = (maxDistance - distance) / maxDistance;
           const angle = Math.atan2(dy, dx);
           const moveX = Math.cos(angle) * force * 60;
@@ -219,9 +217,7 @@ export default function App() {
     };
 
     const handleMouseLeave = () => {
-      if (!("ontouchstart" in window)) {
-        mousePositionRef.current = { x: 0, y: 0 };
-      }
+      mousePositionRef.current = { x: 0, y: 0 };
     };
 
     window.addEventListener("resize", handleResize);
