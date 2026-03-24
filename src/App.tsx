@@ -19,7 +19,6 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -139,13 +138,6 @@ export default function App() {
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        if (prefersReducedMotion) {
-          p.x = p.baseX;
-          p.y = p.baseY;
-          ctx.fillStyle = "white";
-          ctx.fillRect(p.x, p.y, p.size, p.size);
-          continue;
-        }
         const dx = mouseX - p.x;
         const dy = mouseY - p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
