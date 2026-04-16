@@ -1,4 +1,5 @@
 {
+  "name": "@area44/website",
   "framework": "vite",
   "installCommand": "vp install",
   "buildCommand": "vp build",
