@@ -34,7 +34,7 @@ export default defineConfig({
       ],
     },
     sortTailwindcss: {
-      stylesheet: "./src/styles/globals.css",
+      stylesheet: "./src/index.css",
       attributes: ["class", "className"],
       functions: ["clsx", "cn", "cva", "tv"],
     },
