@@ -1,5 +1,5 @@
 {
-  "name": "area44.github.io",
+  "name": "@area44/website",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -12,24 +12,18 @@
     "check": "vp check",
     "prepare": "vp config"
   },
-  "dependencies": {
+  "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",
     "@vitejs/plugin-react": "^6.0.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "tailwindcss": "^4.2.2"
-  },
-  "devDependencies": {
+    "tailwindcss": "^4.2.2",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "typescript": "^6.0.2",
-    "vite-plus": "latest"
-  },
-  "pnpm": {
-    "overrides": {
-      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
-    }
+    "vite": "npm:@voidzero-dev/vite-plus-core@^0.1.17",
+    "vite-plus": "latest",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@^0.1.17"
   }
 }
