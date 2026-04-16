@@ -233,17 +233,17 @@ export default function App() {
   }, [isMobile]);
 
   return (
-    <div className="relative w-full h-dvh flex flex-col items-center justify-center bg-black">
+    <div className="relative flex h-dvh w-full flex-col items-center justify-center bg-black">
       <canvas
         aria-label="Interactive particle effect with AREA44 logo"
-        className="w-full h-full absolute top-0 left-0 touch-none"
+        className="absolute top-0 left-0 h-full w-full touch-none"
         ref={canvasRef}
       />
-      <div className="absolute bottom-[100px] text-center z-10">
-        <p className="font-mono text-gray-400 text-xs sm:text-base md:text-sm ">
+      <div className="absolute bottom-[100px] z-10 text-center">
+        <p className="font-mono text-xs text-gray-400 sm:text-base md:text-sm">
           Welcome to{" "}
           <a
-            className="invite-link focus-visible:ring-1 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none rounded-sm text-gray-300 hover:text-white transition-colors duration-300"
+            className="invite-link rounded-sm text-gray-300 transition-colors duration-300 hover:text-white focus-visible:ring-1 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
             href="https://github.com/area44"
             rel="noreferrer"
             target="_blank"
