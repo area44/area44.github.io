@@ -250,14 +250,7 @@ export default function App() {
           >
             AREA44
             <span className="sr-only"> (opens in a new tab)</span>
-          </a>{" "}
-          <span>-</span>{" "}
-          <span className="transition-colors duration-300">Crafted with code & curiosity.</span>
-          <style>{`
-            a.invite-link:hover + span + span, a.invite-link:focus-visible + span + span {
-              color: #FFFFFF;
-            }
-          `}</style>
+          </a>
         </p>
       </div>
     </div>
