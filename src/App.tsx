@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface Particle {
   x: number;
@@ -16,7 +16,7 @@ export default function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePositionRef = useRef({ x: 0, y: 0 });
   const isTouchingRef = useRef(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobileRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -27,7 +27,7 @@ export default function App() {
     const updateCanvasSize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      setIsMobile(window.innerWidth < 768);
+      isMobileRef.current = window.innerWidth < 768;
     };
 
     updateCanvasSize();
@@ -50,7 +50,7 @@ export default function App() {
       const img = new Image();
 
       img.onload = () => {
-        const scale = isMobile ? 2.0 : 3.0;
+        const scale = isMobileRef.current ? 2.0 : 3.0;
         const imgWidth = img.width * scale;
         const imgHeight = img.height * scale;
 
@@ -130,7 +130,7 @@ export default function App() {
       if (!ctx || !canvas) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "black";
+      ctx.fillStyle = "#09090b";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const { x: mouseX, y: mouseY } = mousePositionRef.current;
@@ -195,7 +195,6 @@ export default function App() {
     const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
-        e.preventDefault();
         handleMove(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
@@ -216,10 +215,10 @@ export default function App() {
 
     window.addEventListener("resize", handleResize);
     canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+    canvas.addEventListener("touchmove", handleTouchMove, { passive: true });
     canvas.addEventListener("mouseleave", handleMouseLeave);
-    canvas.addEventListener("touchstart", handleTouchStart);
-    canvas.addEventListener("touchend", handleTouchEnd);
+    canvas.addEventListener("touchstart", handleTouchStart, { passive: true });
+    canvas.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -230,20 +229,20 @@ export default function App() {
       canvas.removeEventListener("touchend", handleTouchEnd);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isMobile]);
+  }, []);
 
   return (
-    <div className="relative flex h-dvh w-full flex-col items-center justify-center bg-black">
+    <div className="relative flex h-dvh w-full flex-col items-center justify-center bg-zinc-950">
       <canvas
         aria-label="Interactive particle effect with AREA44 logo"
         className="absolute top-0 left-0 h-full w-full touch-none"
         ref={canvasRef}
       />
       <div className="absolute bottom-[100px] z-10 text-center">
-        <p className="font-mono text-xs text-gray-400 sm:text-base md:text-sm">
+        <p className="font-mono text-xs text-zinc-400 sm:text-base md:text-sm">
           Welcome to{" "}
           <a
-            className="invite-link rounded-sm text-gray-300 transition-colors duration-300 hover:text-white focus-visible:ring-1 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+            className="invite-link rounded-sm text-zinc-300 transition-colors duration-300 hover:text-white focus-visible:ring-1 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 focus-visible:outline-none"
             href="https://github.com/area44"
             rel="noreferrer"
             target="_blank"
