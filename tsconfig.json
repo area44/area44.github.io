@@ -2,6 +2,7 @@
   "compilerOptions": {
     /* Language & Environment */
     "target": "esnext",
+    "module": "esnext",
     "lib": ["esnext", "dom"],
     /* React JSX Settings */
     "jsx": "react-jsx",
@@ -25,6 +26,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "erasableSyntaxOnly": true,
+    "noUncheckedSideEffectImports": true,
     "paths": {
       "@/*": ["./src/*"]
     },
