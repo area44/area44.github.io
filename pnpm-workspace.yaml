@@ -1,32 +1,11 @@
-packages:
-  - "packages/*"
-  - "apps/*"
-  - "."
 minimumReleaseAge: 0
 shellEmulator: true
 trustLockfile: true
 trustPolicy: no-downgrade
 trustPolicyIgnoreAfter: 604800
+packages:
+  - "."
 allowBuilds:
   esbuild: false
-catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.4
-  vite-plus: 0.2.4
 overrides:
-  vite: "catalog:"
-peerDependencyRules:
-  allowAny:
-    - vite
-  allowedVersions:
-    vite: "*"
-minimumReleaseAgeExclude:
-  - vite-plus
-  - "@voidzero-dev/*"
-  - oxlint
-  - "@oxlint/*"
-  - oxlint-tsgolint
-  - "@oxlint-tsgolint/*"
-  - oxfmt
-  - "@oxfmt/*"
-  - vitest
-  - "@vitest/*"
+  vite: npm:@voidzero-dev/vite-plus-core@^0.2.4

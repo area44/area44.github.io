@@ -22,7 +22,7 @@
     "react-dom": "^19.2.7",
     "tailwindcss": "^4.3.2",
     "typescript": "^7.0.2",
-    "vite": "catalog:",
-    "vite-plus": "catalog:"
+    "vite": "npm:@voidzero-dev/vite-plus-core@^0.2.4",
+    "vite-plus": "^0.2.4"
   }
 }
