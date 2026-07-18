@@ -8,4 +8,4 @@ packages:
 allowBuilds:
   esbuild: false
 overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@^0.2.4
+  vite: npm:@voidzero-dev/vite-plus-core@^0.2.5
