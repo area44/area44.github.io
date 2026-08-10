@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@^0.2.7
+  vite: npm:@voidzero-dev/vite-plus-core@^0.2.8
 
 importers:
 
@@ -39,10 +39,10 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
       vite:
-        specifier: npm:@voidzero-dev/vite-plus-core@^0.2.7
+        specifier: npm:@voidzero-dev/vite-plus-core@^0.2.8
         version: '@voidzero-dev/vite-plus-core@0.2.8(@types/node@25.9.5)(jiti@2.7.0)(typescript@7.0.2)'
       vite-plus:
-        specifier: ^0.2.7
+        specifier: ^0.2.8
         version: 0.2.8(@types/node@25.9.5)(@voidzero-dev/vite-plus-core@0.2.8(@types/node@25.9.5)(jiti@2.7.0)(typescript@7.0.2))(jiti@2.7.0)(typescript@7.0.2)
 
 packages:
