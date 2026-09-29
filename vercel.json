@@ -1,7 +1,7 @@
 {
   "name": "@area44/website",
   "framework": "vite",
-  "buildCommand": "vp build",
+  "buildCommand": "vpr build",
   "outputDirectory": "dist",
   "github": {
     "silent": true
