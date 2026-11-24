@@ -3,7 +3,7 @@ allowBuilds:
 autoDedupe: true
 minimumReleaseAge: 0
 overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@^1.6.0
+  vite: npm:@voidzero-dev/vite-plus-core@^8.3.8001
 shellEmulator: true
 trustLockfile: true
 trustPolicy: no-downgrade
